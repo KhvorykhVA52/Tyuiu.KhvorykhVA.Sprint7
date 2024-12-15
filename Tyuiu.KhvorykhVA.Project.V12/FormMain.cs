@@ -7,16 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using Tyuiu.KhvorykhVA.Project.V12.Lib;
-using Tyuiu.KhvorykhVA.Project.V12;
 
+using System.IO;
+using Tyuiu.KhvorykhVA.Sprint7.Project.V12.Lib;
+using Tyuiu.KhvorykhVA.Project.V12.Lib;
 namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
 {
     public partial class FormMain : Form
     {
         DataService ds = new DataService();
-
         public FormMain()
         {
             InitializeComponent();
@@ -36,15 +35,22 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
         {
             try
             {
-                string path = @"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7.Project.V12\Tyuiu.KhvorykhVA.Sprint7.Project.V12\bin\Release\ShopsInPutFile.csv";
-                textBoxShopInfo_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 1) + Environment.NewLine +
-                                           ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 2) + Environment.NewLine +
-                                           ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 3) + Environment.NewLine +
-                                           ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 4);
+                string path = @"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\ShopsInPutFile.csv";
+                if (File.Exists(path))
+                {
+                    textBoxShopInfo_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 1) + Environment.NewLine +
+                                             ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 2) + Environment.NewLine +
+                                             ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 3) + Environment.NewLine +
+                                             ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 4);
+                }
+                else
+                {
+                    MessageBox.Show("Файл не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Введены неверные данные", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -58,25 +64,32 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
             string name = Convert.ToString(textBoxName_KVA.Text);
             try
             {
-                string path = $@"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7.Project.V12\Tyuiu.KhvorykhVA.Sprint7.Project.V12\bin\Release\ShopsInPutFile.csv";
-                string fileData = File.ReadAllText(path);
-                fileData = fileData.Replace('\n', '\r');
-                string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
-
-                int rows = lines.Length;
-                int columns = lines[0].Split(';').Length;
-
-                for (int i = 1; i < rows; i++)
+                string path = $@"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\{name}InPutFile.csv";
+                if (File.Exists(path))
                 {
-                    textBoxShowModels_KVA.Text += ds.CollectTextFromFileInt(path, i, 0) + Environment.NewLine;
+                    string fileData = File.ReadAllText(path);
+                    fileData = fileData.Replace('\n', '\r');
+                    string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    int rows = lines.Length;
+                    int columns = lines[0].Split(';').Length;
+
+                    for (int i = 1; i < rows; i++)
+                    {
+                        textBoxShowModels_KVA.Text += ds.CollectTextFromFileInt(path, i, 0) + Environment.NewLine;
+                    }
+                    textBoxShowModels_KVA.Text += "--------------------" + Environment.NewLine;
+                    buttonDone_KVA.Enabled = true;
+                    textBoxModel_KVA.Enabled = true;
                 }
-                textBoxShowModels_KVA.Text += "--------------------" + Environment.NewLine;
-                buttonDone_KVA.Enabled = true;
-                textBoxModel_KVA.Enabled = true;
+                else
+                {
+                    MessageBox.Show("Файл не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Введены неверные данные", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -85,35 +98,42 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
             string name = Convert.ToString(textBoxName_KVA.Text);
             try
             {
-                string path = $@"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7.Project.V12\Tyuiu.KhvorykhVA.Sprint7.Project.V12\bin\Release\ShopsInPutFile.csv";
-                if (radioButtonDiagonal_KVA.Checked)
+                string path = $@"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\{name}InPutFile.csv";
+                if (File.Exists(path))
                 {
-                    textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 1);
+                    if (radioButtonDiagonal_KVA.Checked)
+                    {
+                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 1);
+                    }
+                    else if (radioButtonScreenSize_KVA.Checked)
+                    {
+                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 2);
+                    }
+                    else if (radioButtonRAM_KVA.Checked)
+                    {
+                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 3);
+                    }
+                    else if (radioButtonSSD_KVA.Checked)
+                    {
+                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 4);
+                    }
+                    else if (radioButtonProcessor_KVA.Checked)
+                    {
+                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 5);
+                    }
+                    else if (radioButtonProcessorFrequency_KVA.Checked)
+                    {
+                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 6);
+                    }
                 }
-                if (radioButtonScreenSize_KVA.Checked)
+                else
                 {
-                    textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 2);
-                }
-                if (radioButtonRAM_KVA.Checked)
-                {
-                    textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 3);
-                }
-                if (radioButtonSSD_KVA.Checked)
-                {
-                    textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 4);
-                }
-                if (radioButtonProcessor_KVA.Checked)
-                {
-                    textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 5);
-                }
-                if (radioButtonProcessorFrequency_KVA.Checked)
-                {
-                    textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 6);
+                    MessageBox.Show("Файл не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Введены неверные данные", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
