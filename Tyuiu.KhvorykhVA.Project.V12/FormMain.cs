@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 using System.IO;
-using Tyuiu.KhvorykhVA.Sprint7.Project.V12.Lib;
+using System.Windows.Forms;
 using Tyuiu.KhvorykhVA.Project.V12.Lib;
+
 namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
 {
     public partial class FormMain : Form
@@ -38,10 +30,16 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
                 string path = @"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\ShopsInPutFile.csv";
                 if (File.Exists(path))
                 {
-                    textBoxShopInfo_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 1) + Environment.NewLine +
-                                             ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 2) + Environment.NewLine +
-                                             ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 3) + Environment.NewLine +
-                                             ds.CollectTextFromFile(path, Convert.ToString(textBoxName_KVA.Text), 4);
+                    using (StreamReader sr = new StreamReader(path, System.Text.Encoding.UTF8))
+                    {
+                        sr.ReadLine();
+
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            textBoxShopInfo_KVA.Text += line + Environment.NewLine;
+                        }
+                    }
                 }
                 else
                 {
@@ -64,7 +62,7 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
             string name = Convert.ToString(textBoxName_KVA.Text);
             try
             {
-                string path = $@"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\{name}InPutFile.csv";
+                string path = @"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\LaptopsInPutFile.csv";
                 if (File.Exists(path))
                 {
                     string fileData = File.ReadAllText(path);
@@ -76,7 +74,11 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
 
                     for (int i = 1; i < rows; i++)
                     {
-                        textBoxShowModels_KVA.Text += ds.CollectTextFromFileInt(path, i, 0) + Environment.NewLine;
+                        string[] values = lines[i].Split(';');
+                        if (values[0].Contains(name))
+                        {
+                            textBoxShowModels_KVA.Text += values[0] + Environment.NewLine;
+                        }
                     }
                     textBoxShowModels_KVA.Text += "--------------------" + Environment.NewLine;
                     buttonDone_KVA.Enabled = true;
@@ -84,7 +86,7 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
                 }
                 else
                 {
-                    MessageBox.Show("Файл не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Файл не найдет", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -98,32 +100,42 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
             string name = Convert.ToString(textBoxName_KVA.Text);
             try
             {
-                string path = $@"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\{name}InPutFile.csv";
+                string path = @"C:\Users\User\source\repos\Tyuiu.KhvorykhVA.Sprint7\Tyuiu.KhvorykhVA.Project.V12\bin\Debug\net8.0-windows\LaptopsInPutFile.csv";
                 if (File.Exists(path))
                 {
-                    if (radioButtonDiagonal_KVA.Checked)
+                    string fileData = File.ReadAllText(path);
+                    fileData = fileData.Replace('\n', '\r');
+                    string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    int rows = lines.Length;
+                    int columns = lines[0].Split(';').Length;
+
+                    for (int i = 1; i < rows; i++)
                     {
-                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 1);
-                    }
-                    else if (radioButtonScreenSize_KVA.Checked)
-                    {
-                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 2);
-                    }
-                    else if (radioButtonRAM_KVA.Checked)
-                    {
-                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 3);
-                    }
-                    else if (radioButtonSSD_KVA.Checked)
-                    {
-                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 4);
-                    }
-                    else if (radioButtonProcessor_KVA.Checked)
-                    {
-                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 5);
-                    }
-                    else if (radioButtonProcessorFrequency_KVA.Checked)
-                    {
-                        textBoxRes_KVA.Text = ds.CollectTextFromFile(path, Convert.ToString(textBoxModel_KVA.Text), 6);
+                        string[] values = lines[i].Split(';');
+                        if (values[0].Contains(textBoxModel_KVA.Text))
+                        {
+                            if (radioButtonDiagonal_KVA.Checked)
+                            {
+                                textBoxRes_KVA.Text = values[1];
+                            }
+                            else if (radioButtonScreenSize_KVA.Checked)
+                            {
+                                textBoxRes_KVA.Text = values[2];
+                            }
+                            else if (radioButtonRAM_KVA.Checked)
+                            {
+                                textBoxRes_KVA.Text = values[3];
+                            }
+                            else if (radioButtonSSD_KVA.Checked)
+                            {
+                                textBoxRes_KVA.Text = values[4];
+                            }
+                            else if (radioButtonProcessor_KVA.Checked)
+                            {
+                                textBoxRes_KVA.Text = values[5];
+                            }
+                        }
                     }
                 }
                 else
