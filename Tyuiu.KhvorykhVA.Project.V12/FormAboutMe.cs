@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,21 +10,16 @@ using System.Windows.Forms;
 
 namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
 {
-    public partial class FormAbout : Form
+    public partial class FormAboutMe : Form
     {
-        public FormAbout()
+        public FormAboutMe()
         {
             InitializeComponent();
         }
 
-        private void buttonClose_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using Tyuiu.KhvorykhVA.Project.V12;
 using Tyuiu.KhvorykhVA.Project.V12.Lib;
 
 namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
@@ -8,6 +9,7 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
     public partial class FormMain : Form
     {
         DataService ds = new DataService();
+
         public FormMain()
         {
             InitializeComponent();
@@ -15,12 +17,12 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            //
+            // Метод загрузки формы
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            //
+            // Обработка изменения состояния радиокнопки
         }
 
         private void buttonShowShopInfo_KVA_Click(object sender, EventArgs e)
@@ -54,7 +56,7 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
 
         private void textBoxShopInfo_KVA_TextChanged(object sender, EventArgs e)
         {
-            //
+            // Обработка изменения текста в текстовом поле
         }
 
         private void buttonShowModels_KVA_Click(object sender, EventArgs e)
@@ -86,7 +88,7 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
                 }
                 else
                 {
-                    MessageBox.Show("Файл не найдет", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Файл не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -149,10 +151,22 @@ namespace Tyuiu.KhvorykhVA.Sprint7.Project.V12
             }
         }
 
-        private void buttonInfo_KVA_Click(object sender, EventArgs e)
+        private void buttonAboutProgram_KVA_Click(object sender, EventArgs e)
         {
             FormAbout formAbout = new FormAbout();
             formAbout.ShowDialog();
+        }
+
+        private void buttonAboutDeveloper_KVA_Click(object sender, EventArgs e)
+        {
+            FormAboutMe formAboutMe = new FormAboutMe();
+            formAboutMe.ShowDialog();
+        }
+
+        private void buttonInfo_KVA_Click(object sender, EventArgs e)
+        {
+            FormAboutMe formAboutMe = new FormAboutMe();
+            formAboutMe.ShowDialog();
         }
     }
 }

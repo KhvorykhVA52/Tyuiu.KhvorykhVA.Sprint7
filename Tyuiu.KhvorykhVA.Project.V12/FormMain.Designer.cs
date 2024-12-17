@@ -26,6 +26,7 @@
         private System.Windows.Forms.Button buttonShowShopInfo_KVA;
         private System.Windows.Forms.Label labelShopInfo_KVA;
         private System.Windows.Forms.TextBox textBoxShopInfo_KVA;
+        private System.Windows.Forms.Button buttonAboutProgram_KVA; // Переименованная кнопка
 
         protected override void Dispose(bool disposing)
         {
@@ -41,6 +42,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             panelButtonsInPut_KVA = new Panel();
+            buttonAboutProgram_KVA = new Button();
             buttonShowShopInfo_KVA = new Button();
             buttonShowModels_KVA = new Button();
             groupBoxInfo_KVA = new GroupBox();
@@ -71,6 +73,7 @@
             // panelButtonsInPut_KVA
             // 
             panelButtonsInPut_KVA.BackColor = Color.SlateBlue;
+            panelButtonsInPut_KVA.Controls.Add(buttonAboutProgram_KVA);
             panelButtonsInPut_KVA.Controls.Add(buttonShowShopInfo_KVA);
             panelButtonsInPut_KVA.Controls.Add(buttonShowModels_KVA);
             panelButtonsInPut_KVA.Controls.Add(groupBoxInfo_KVA);
@@ -81,6 +84,16 @@
             panelButtonsInPut_KVA.Name = "panelButtonsInPut_KVA";
             panelButtonsInPut_KVA.Size = new Size(854, 201);
             panelButtonsInPut_KVA.TabIndex = 0;
+            // 
+            // buttonAboutProgram_KVA
+            // 
+            buttonAboutProgram_KVA.Location = new Point(735, 51);
+            buttonAboutProgram_KVA.Name = "buttonAboutProgram_KVA";
+            buttonAboutProgram_KVA.Size = new Size(109, 23);
+            buttonAboutProgram_KVA.TabIndex = 5;
+            buttonAboutProgram_KVA.Text = "О программе";
+            buttonAboutProgram_KVA.UseVisualStyleBackColor = true;
+            buttonAboutProgram_KVA.Click += buttonAboutProgram_KVA_Click;
             // 
             // buttonShowShopInfo_KVA
             // 
@@ -133,7 +146,7 @@
             // radioButtonProcessor_KVA
             // 
             radioButtonProcessor_KVA.AutoSize = true;
-            radioButtonProcessor_KVA.Location = new Point(211, 144);
+            radioButtonProcessor_KVA.Location = new Point(347, 119);
             radioButtonProcessor_KVA.Name = "radioButtonProcessor_KVA";
             radioButtonProcessor_KVA.Size = new Size(87, 19);
             radioButtonProcessor_KVA.TabIndex = 7;
@@ -144,7 +157,7 @@
             // radioButtonScreenSize_KVA
             // 
             radioButtonScreenSize_KVA.AutoSize = true;
-            radioButtonScreenSize_KVA.Location = new Point(322, 119);
+            radioButtonScreenSize_KVA.Location = new Point(207, 119);
             radioButtonScreenSize_KVA.Name = "radioButtonScreenSize_KVA";
             radioButtonScreenSize_KVA.Size = new Size(134, 19);
             radioButtonScreenSize_KVA.TabIndex = 6;
@@ -155,7 +168,7 @@
             // radioButtonSSD_KVA
             // 
             radioButtonSSD_KVA.AutoSize = true;
-            radioButtonSSD_KVA.Location = new Point(212, 119);
+            radioButtonSSD_KVA.Location = new Point(207, 144);
             radioButtonSSD_KVA.Name = "radioButtonSSD_KVA";
             radioButtonSSD_KVA.Size = new Size(86, 19);
             radioButtonSSD_KVA.TabIndex = 5;
@@ -167,7 +180,7 @@
             // radioButtonRAM_KVA
             // 
             radioButtonRAM_KVA.AutoSize = true;
-            radioButtonRAM_KVA.Location = new Point(12, 144);
+            radioButtonRAM_KVA.Location = new Point(6, 144);
             radioButtonRAM_KVA.Name = "radioButtonRAM_KVA";
             radioButtonRAM_KVA.Size = new Size(139, 19);
             radioButtonRAM_KVA.TabIndex = 8;
@@ -178,7 +191,7 @@
             // radioButtonDiagonal_KVA
             // 
             radioButtonDiagonal_KVA.AutoSize = true;
-            radioButtonDiagonal_KVA.Location = new Point(12, 119);
+            radioButtonDiagonal_KVA.Location = new Point(1, 119);
             radioButtonDiagonal_KVA.Name = "radioButtonDiagonal_KVA";
             radioButtonDiagonal_KVA.Size = new Size(181, 19);
             radioButtonDiagonal_KVA.TabIndex = 2;
